@@ -1,0 +1,44 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script>
+        function SendInfoAjax() {
+            valueToPass = $('#inputText').val();
+            var serviceURL = '/Home/AjaxMethod';
+                $.ajax({
+                    type: "POST",
+                    url: serviceURL,
+                    data: "{ \n   \"contentParam\": \"" + valueToPass + "\"\n}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: successFunc,
+                    error: errorFunc
+                });
+                function successFunc(data, status) {     
+                    alert(data);
+                    $('#inputText').val("");
+                    $('#inputText').focus();
+                }
+                function errorFunc() {
+                    alert('error');
+                }
+        }
+    </script>
+</head>
+<body>
+    <div>
+        @Html.TextBox("inputText")
+        <button id="btSend" onclick="SendInfoAjax();">Send</button>
+    </div>
+</body>
+</html>
